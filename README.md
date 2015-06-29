@@ -20,8 +20,10 @@
       
     * Linux
       
-      1.按照[此步骤](https://help.github.com/articles/generating-ssh-keys/#platform-linux)，添加密钥。
+      1.安装Git与SSH。（Ubuntu上为# sudo apt-get install git openssh-client）
+
+      2.按照[此步骤](https://help.github.com/articles/generating-ssh-keys/#platform-linux)，添加密钥。
       （第1,3,5步可省略，第4步可直接复制粘贴id_rsa.pub中的内容。）
       
-      2.克隆此项目，并使用PyCharm打开此文件夹。
+      3.克隆此项目，并使用PyCharm打开此文件夹。
     
