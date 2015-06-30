@@ -19,13 +19,23 @@
       
       3.下载[Git](http://www.git-scm.com/)并安装。
       
-      4.启动Git Bash，按照[此步骤](https://help.github.com/articles/generating-ssh-keys/）添加密钥（注意选择平台）。
+      4.启动Git Bash，按照[此步骤](https://help.github.com/articles/generating-ssh-keys/#platform-windows)添加密钥
+      （第1,3,5步可省略，第2步可省略passphrase，第4步可直接复制粘贴id_rsa.pub中的内容）。
       
-      4.启动PyCharm，在File->Settings->Version Control->Git中设置Git的可执行文件位置（Git安装目录中的bin目录）.
+      5.启动PyCharm，在File->Settings->Version Control->Git中设置Git的可执行文件位置（Git安装目录中的bin目录）.
       
-      5.在PyCharm中，选择VCS->Checkout from Version Control->GitHub。
+      6.在PyCharm中，选择VCS->Checkout from Version Control->GitHub。
       
-      6.输入GitHub账户密码。
+      7.输入GitHub账户密码(下一步若需要密码可忽略），再克隆此项目。
+      
+    * Linux
+      
+      1.安装python,git，openssh（过程省略）。
+      
+      2.启动终端，按照[此步骤](https://help.github.com/articles/generating-ssh-keys/#platform-linux)添加密钥
+      （可参考Windows部分）。
+      
+      3.以后步骤同Windows。
 
 
 * 6/29
