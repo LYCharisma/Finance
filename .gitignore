@@ -1,8 +1,12 @@
 # PyCharm
 .idea/
 
-# PyThon
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
 *.pyc
+__pycache__
 
 # Database
 db.sqlite3
