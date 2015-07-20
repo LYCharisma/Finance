@@ -7,12 +7,10 @@ from django.db.models import F
 from Main.views import ren2res,paginate
 from Main.models_data import *
 
-USE_DB='data'
-
 def render(template,req,qs,field='trade_date'):
     q=QueryDict(mutable=True)
     dict={}
-    qs=qs.using(USE_DB).annotate(the_filter_date=F(field))
+    qs=qs.annotate(the_filter_date=F(field))
     sd=req.GET.get('sdate')
     if sd:
         q['sdate']=sd
