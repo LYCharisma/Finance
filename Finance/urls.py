@@ -55,8 +55,16 @@ urlpatterns = [
     url(r'^apps/modify/([0-9]+)/$',views_apps.modify), #modify specified app
     url(r'^apps/delete/([0-9]+)/$',views_apps.delete),
 
-    url(r'^api/right/([0-9]+)/$',views.finished,{'status':True}),
-    url(r'^api/wrong/([0-9]+)/$',views.finished,{'status':False}),
+    url(r'^api/started/([0-9]+)/$',views.started),
+    url(r'^api/stopped/([0-9]+)/$',views.stopped),
+    url(r'^api/right/([0-9]+)/$',views.finished,{'ok':True}),
+    url(r'^api/wrong/([0-9]+)/$',views.finished,{'ok':False}),
+
+    url(r'^apps/host/$',views_apps.host),
+    # url(r'^apps/host/modify/$',views_apps.host_modify),
+    # url(r'^apps/host/delete/([0-9]+)',views_apps.host_delete),
+    url(r'^apps/host/add$',views_apps.host_add),
+    url(r'^apps/host/delete/([0-9]+)$',views_apps.host_delete),
 
     url(r'^admin/', include(admin.site.urls)),
 ] + staticfiles_urlpatterns()

@@ -1,3 +1,4 @@
+import os
 from math import ceil
 from datetime import datetime
 
@@ -14,7 +15,7 @@ from Main import client
 
 def ren2res(template,req,dict={}):
     if req.user.is_authenticated():
-        dict.update({'user':{'id':req.user.id,'name':req.user.get_username()}})
+        dict.update({'user':{'id':req.user.id,'name':req.user.get_username(),'super':req.user.is_superuser}})
     else:
         dict.update(user=False)
     return render_to_response(template,dict,context_instance=RequestContext(req))
@@ -66,7 +67,7 @@ def login(req):
         if req.user.is_anonymous():
             if req.GET.get('next'):
                 req.session['next']=req.GET.get('next')
-            return ren2res("login.html",req)
+            return ren2res("home.html",req,{'action':"login"})
         else:
             return HttpResponseRedirect("/")
     elif req.method=='POST':
@@ -74,7 +75,7 @@ def login(req):
         if user is not None:
             if not user.is_active:
                 if user.last_login:
-                    return ren2res("login.html",req,{'err':"用户已被删除。"})
+                    return ren2res("home.html",req,{'loginerr':"用户已被删除。",'action':"login"})
                 else:
                     return HttpResponseRedirect('/err/not_active/')
             auth.login(req,user)
@@ -84,7 +85,7 @@ def login(req):
             else:
                 return HttpResponseRedirect('/')
         else:
-            return ren2res("login.html",req,{'err':"用户名或密码错误。"})
+            return ren2res("home.html",req,{'loginerr':"用户名或密码错误。",'action':"login"})
 
 def logout(req):
     auth.logout(req)
@@ -106,18 +107,48 @@ def not_admin(req):
     return ren2err("info/not_admin.html",req.GET.get('next'))
 
 @require_POST
-def finished(req,id,status):
+def started(req,id):
     try:
         job=Job.objects.get(pk=id)
     except:
         return HttpResponseNotFound()
+    if job.status <= 0 and job.status!=-1:
+        return HttpResponse()
     if job.status != 2:
         return HttpResponseBadRequest()
-    f=open(RESULT_DIR+'out_'+str(id),mode='w')
-    f.write(req.POST.get('out'))
+    job.status=3
+    job.start_time=datetime.utcnow()
+    job.save()
+    return HttpResponse()
+
+@require_POST
+def stopped(req,id):
+    try:
+        job=Job.objects.get(pk=id)
+    except:
+        return HttpResponseNotFound()
+    if job.status <= 0 and job.status !=-1:
+        return HttpResponse()
+    if job.status != 4:
+        return HttpResponseBadRequest()
+    job.status=-1
+    job.end_time=datetime.utcnow()
+    job.save()
+    return HttpResponse()
+
+@require_POST
+def finished(req,id,ok):
+    try:
+        job=Job.objects.get(pk=id)
+    except:
+        return HttpResponseNotFound()
+    if job.status != 2 and job.status != 3 and job.status != 4:
+        return HttpResponseBadRequest()
+    f=open(os.path.join(RESULT_DIR,'out_'+str(id)),mode='w')
+    f.write(req.POST.get('out',''))
     f.close()
-    f=open(RESULT_DIR+'err_'+str(id),mode='w')
-    f.write(req.POST.get('err'))
+    f=open(os.path.join(RESULT_DIR,'err_'+str(id)),mode='w')
+    f.write(req.POST.get('err',''))
     f.close()
     ret=req.POST.get('ret')
     try:
@@ -125,10 +156,7 @@ def finished(req,id,status):
         job.ret=ret
     except:
         pass
-    if status:
-        job.status=0
-    else:
-        job.status=-2
+    job.status=(0 if ok else -2)
     job.end_time=datetime.utcnow()
     job.save()
     client.count-=1
