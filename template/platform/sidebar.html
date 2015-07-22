@@ -2,13 +2,27 @@
 
         <div class="a" id="all" role="tablist" aria-multiselectable="true">
             <div>&nbsp;</div>
-                            <!--<a href="/jobs/" class="list-group-item">作业管理</a>-->
+            <!--<a href="/platform/" class="list-group-item">网络课堂</a>-->
                 <div id="one" role="tab">
-                    <div id="heading1" class="side-heading text-hei-gray side-heading-in" role="button" >
-                        <img id="img11" class="img" src="/static/image/job_selected.gif">
+                <div id="heading1" class="side-heading text-hei-gray side-heading-in" role="button" href="/platform/" >
+                    <img id="img11" class="img" src="/static/image/course_selected.gif">
+                    网络课堂
+                </div>
+                    <div id="list1" class="panel-collapse collapse in" role="tabpanel"aria-expanded="true">
+                        <ul class="list-group">
+                            <a class="list-group-item text-hei-gray" href="/platform">课程列表</a>
+                            <a class="list-group-item text-hei-gray" href="/platform/upload">课程上传</a>
+                        </ul>
+                    </div>
+            </div>
+                            <!--<a href="/jobs/" class="list-group-item">作业管理</a>-->
+                <div id="five" role="tab">
+                    <div id="heading5" class="side-heading text-hei-gray" role="button" >
+                        <img id="img50" class="img" src="/static/image/job.gif">
+                        <img id="img51" class="img" src="/static/image/job_selected.gif">
                         作业管理
                     </div>
-                    <div id="list1" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+                    <div id="list1" class="panel-collapse collapse" role="tabpanel" aria-expanded="true">
                         <ul class="list-group">
                             <a class="list-group-item text-hei-gray" href="/jobs/submit">作业提交</a>
                             <a class="list-group-item text-hei-gray" href="/jobs">作业查看</a>
@@ -62,20 +76,6 @@
                         <a class="list-group-item text-hei-gray" href="/apps">应用列表</a>
                         <a class="list-group-item text-hei-gray" href="/apps/deploy">应用部署</a>
                         <a class="list-group-item text-hei-gray" href="/apps/host">主机管理</a>
-                        </ul>
-                    </div>
-            </div>
-        <!--<a href="/platform/" class="list-group-item">网络课堂</a>-->
-                <div id="five" role="tab">
-                <div id="heading5" class="side-heading text-hei-gray" role="button" href="/platform/" >
-                    <img id="img50" class="img" src="/static/image/course.gif">
-                    <img id="img51" class="img" src="/static/image/course_selected.gif">
-                    网络课堂
-                </div>
-                    <div id="list5" class="panel-collapse collapse" role="tabpanel"aria-expanded="true">
-                        <ul class="list-group">
-                            <a class="list-group-item text-hei-gray" href="/platform">课程列表</a>
-                            <a class="list-group-item text-hei-gray" href="/platform/upload">课程上传</a>
                         </ul>
                     </div>
             </div>
