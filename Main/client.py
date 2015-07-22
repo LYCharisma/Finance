@@ -1,4 +1,5 @@
-from multiprocessing import Pipe,Process
+from multiprocessing import Pipe
+from datetime import datetime
 
 import requests
 
@@ -19,45 +20,38 @@ def start(id=None):
     while count<COUNT_MAX and len(list)>0:
         id=list.pop(0)
         job=Job.objects.get(pk=int(id))
+        if job.status != 1:
+            continue
         scon.send((do_start,(str(job.app.host.ip),int(job.app.host.port),
-                          int(job.pk),str(job.app.path),str(job.cmd))))
+                          int(job.pk),str(job.app.path),str(job.cmd),),))
         count+=1
+        job.status=2
+        job.start_time=datetime.utcnow()
+        job.save()
 
 def stop(id):
     job=Job.objects.get(pk=int(id))
-    scon.send((do_stop,(str(job.app.host.ip),int(job.app.host.port),int(job.pk))))
+    if job.status != 3 and job.status != 4:
+        return
+    scon.send((do_stop,(str(job.app.host.ip),int(job.app.host.port),int(job.pk),),))
+    job.status=4
+    job.save()
 
 def do_start(ip,port,id,exec,param):
-    url="http://"
-    url.join(ip)
-    url.join(':')
-    url.join(str(port))
-    url.join('/start/')
-    url.join(str(id))
-
-    exec.join(' ')
-    exec.join(param)
-
-    r=requests.post(url,{'cmd':exec})
+    url="http://"+ip+':'+str(port)+'/start/'+str(id)
+    r=requests.post(url,{'cmd':exec+' '+param})
 
 def do_stop(ip,port,id):
-    url="http://"
-    url.join(ip)
-    url.join(':')
-    url.join(str(port))
-    url.join('/start/')
-    url.join(str(id))
-
+    url="http://"+ip+':'+str(port)+'/stop/'+str(id)
     r=requests.post(url)
 
 def daemon(rcon):
-    while True:
-        o=rcon.recv()
-        try:
-            o[0](*o[1])
-        except:
-            pass
-
-p=Process(name="daemon",target=daemon,args=(rcon))
-p.daemon=True
-p.start()
+    try:
+        while True:
+            o=rcon.recv()
+            try:
+                o[0](*o[1])
+            except:
+                pass
+    except:
+        pass
