@@ -83,6 +83,12 @@ DATABASES = {
         'NAME': 'finance',
         'USER': 'finance',
         'PASSWORD': 'finance',
+    },
+    'data': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'finance_data',
+        'USER': 'finance',
+        'PASSWORD': 'finance',
     }
 }
 
