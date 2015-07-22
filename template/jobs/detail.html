@@ -61,7 +61,7 @@
     </tr>
     <tr>
         <th>运行结果</th>
-        <td><pre>{{ result }}</pre></td>
+        <td><pre>{{ result }}{% if error %}<br>{{ error }}{% endif %}</pre></td>
     </tr>
 </table>
 {% endif %}

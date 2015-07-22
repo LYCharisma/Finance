@@ -65,12 +65,19 @@ def detail(req,jid):
             job=Job.objects.get(id=jid)
         except:
             raise Http404
-        try:
-            with open("a.txt","r") as result:
-                res=result.read()
-        except IOError as error:
+        dict={'job':job}
+        if job.ret is None:
             res="作业还未执行完成！"
-        dict={'job':job,'result':res}
+            dict.update({'result':res})
+        else:
+            try:
+                with open("/result/out_"+jid,"r") as result:
+                    res=result.read()
+                with open("/result/err_"+jid,"r") as error:
+                    err=error.read()
+                dict.update({'result':res,'error':err})
+            except:
+                pass
         return ren2res("jobs/detail.html",req,dict)
 
 def stop(req,jid):
