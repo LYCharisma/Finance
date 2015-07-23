@@ -13,6 +13,7 @@
 
     <script>
         $(document).ready(function(){
+            <!-- 用于实现侧边导航菜单的弹入弹出，通过每隔一段时间改变元素的left属性来实现 -->
             {% if user %}
             var time11,time21,time12,time22,time13,time23,time14,time24,time15,time25;
             $("#side1").mouseover(function(){
@@ -78,6 +79,8 @@
                 }
             }
             {% endif %}
+
+            <!-- 用于实现页面中圆点的放大渐隐 -->
             $("#dot1").mouseover(function() {
                 $("#dot1").fadeOut(1000);
                 $("#ldot1").fadeIn(1000);
@@ -110,6 +113,8 @@
             });
 
         })
+
+        <!-- 对登录表单验证非空 -->
         function pwck(){
             if($("#name").val().length==0){
                 $(".text-err").text("未输入用户名！");
@@ -142,6 +147,7 @@
             <button class="nav-button" data-toggle="modal" data-target="#modal">关于我们</button>
         </div>
         {% endif %}
+        <!-- 点击“关于我们”按钮后弹出的模态框 -->
         <div class="modal fade" id="modal" role="dialog" aria-labelledby="modalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -190,6 +196,7 @@
 <div class="home-footer">
     <p class="text-hei-black" align="center">版权信息@联系方式</p>
 </div>
+<!-- 点击“登陆”后出现的元素，包括登录的表单 -->
 {% if action %}
 <div>
     <a href="/"><img src="/static/image/hide.gif" class="home-hide"></a>
@@ -214,6 +221,7 @@
 {% endif %}
     </div>
 </div>
+<!-- 侧边的导航菜单 -->
 {% if user %}
     <a href="/user/"><div id="side1" class="home-side home-side-user">用户管理<img class="home-side-img" src="/static/image/user_selected.gif"></div></a>
     <a href="/jobs/"><div id="side2" class="home-side home-side-jobs">作业管理<img class="home-side-img" src="/static/image/job_selected.gif"></div></a>

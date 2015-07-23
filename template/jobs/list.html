@@ -13,6 +13,7 @@
 
 {% block content %}
 {% if item %}
+<!-- 一个展示作业列表的表 -->
 <table class="table table-striped">
   <tr>
     <th>提交时间</th>
@@ -41,6 +42,7 @@
   </tr>
   {% endfor %}
 </table>
+<!-- 一个分页组件，可以选择查看哪一页-->
 {% include "pagination.html" %}
 <a href="/jobs?pg={{ pg }}">
   <button class="btn btn-default">刷新</button>
