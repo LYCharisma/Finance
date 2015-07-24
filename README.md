@@ -1,27 +1,9 @@
 # 金融风险高性能计算平台
 
-[GitHub Pages](http://liquidfly.github.io/Finance/)
+## 部署方法
 
-## 测试方法
+* 若能看到此文档，说明你在deploy分支下。
 
-* 在此之前，请按照gh-pages分支内容搭建环境完毕。
+* 请按照用户手册进行部署。
 
-1.若为首次运行，在工程目录下运行命令(Linux用户需有root权限）：
-
-> pip install -r requirement.txt
-
-2.运行：
-
-> python manage.py migrate
-
-> python manage.py runserver
-
-Linux用户也可以：
-
-> ./manage.py migrate
-
-> ./manage.py runserver
-
-3.在浏览器中打开127.0.0.1:8000
-
-4.退出可按下Ctrl+C
+* 若要测试，请先切换回master分支。
