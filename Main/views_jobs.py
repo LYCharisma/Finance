@@ -1,6 +1,9 @@
+import os
+
 from django.shortcuts import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+from Finance.settings import RESULT_DIR
 
 from Main.views import ren2res
 from Main.models import *
@@ -70,14 +73,14 @@ def detail(req,jid):
             raise Http404()
         dict={'job':job}
         try:
-            out=open("out_"+str(job.id))
+            out=open(os.path.join(RESULT_DIR,"out_"+str(job.id)))
             dict.update(out=out.read())
             out.close()
         except:
-            dict.update(out="")
+            dict.update(std_out="")
         try:
-            err=open("err_"+str(job.id))
-            dict.update(err=err.read())
+            err=open(os.path.join(RESULT_DIR,"err_"+str(job.id)))
+            dict.update(std_err=err.read())
             err.close()
         except:
             dict.update(err="")
