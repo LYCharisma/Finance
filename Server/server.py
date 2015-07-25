@@ -21,6 +21,7 @@ def worker_daemon(cmd,stop):
     while True:
         while cmd.poll():
             c=cmd.recv()
+            print("recv start")
             if c[0] in dict:
                 continue
             of=tempfile.TemporaryFile()
@@ -29,10 +30,12 @@ def worker_daemon(cmd,stop):
                 dict[c[0]]=subprocess.Popen(c[1].split(),stdout=of,stderr=ef)
                 result_dict[c[0]]=(of,ef,)
                 requests.post("http://"+CLIENT_HOST+":"+str(CLIENT_PORT)+'/api/started/'+str(c[0])+'/')
+                print("started")
             except Exception as ex:
                 of.close()
                 ef.close()
                 requests.post("http://"+CLIENT_HOST+":"+str(CLIENT_PORT)+'/api/wrong/'+str(c[0])+'/',{"err":str(ex)})
+                print("wrong")
         while stop.poll():
             id=stop.recv()
             try:
@@ -41,6 +44,7 @@ def worker_daemon(cmd,stop):
                 of.close()
                 ef.close()
                 requests.post("http://"+CLIENT_HOST+":"+str(CLIENT_PORT)+'/api/stopped/'+str(id)+'/')
+                print("stopped")
             except:
                 pass
         todel=[]
@@ -54,6 +58,7 @@ def worker_daemon(cmd,stop):
             ef.seek(0)
             requests.post("http://"+CLIENT_HOST+":"+str(CLIENT_PORT)+"/api/"+("right/" if ret==0 else "wrong/")+str(id)+'/',
                           {"out":of.read(),"err":ef.read(),"ret":ret})
+            print("right")
             of.close()
             ef.close()
         for id in todel:

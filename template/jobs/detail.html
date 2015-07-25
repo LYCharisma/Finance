@@ -69,11 +69,11 @@
     </tr>
     <tr>
         <th>输出</th>
-        <td><pre>{{ out | linebreaks | escape }}</pre></td>
+        <td><pre>{{ std_out | linebreaks | escape }}</pre></td>
     </tr>
     <tr>
         <th>错误</th>
-        <td><pre>{{ err | linebreaks | escape }}</pre></td>
+        <td><pre>{{ std_err | linebreaks | escape }}</pre></td>
     </tr>
 </table>
 {% endif %}

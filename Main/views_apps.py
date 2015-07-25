@@ -163,6 +163,8 @@ def app_arg_check(req):
             value = req.POST.get('value' + order).strip()
             # note: if blank+order field doesn't exit(when "static" chosen, add "disabled" to #blank, return false
             blank = 1 if req.POST.get('blank' + order) == '是' else 0
+            if not argname:
+                argname=None
             submit = Param(order=order, name=argname, value=value, blank=blank)
             list_submit.append(submit)
             i += 1
