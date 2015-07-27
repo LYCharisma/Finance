@@ -13,7 +13,7 @@
     <label for="app_host">主机</label>
     <select name="host" class="form-control" id="app_host">
     {% for x in host %}
-        <option>{{ x.name }} ({{ x.id }})</option>
+        <option {% ifequal x.id app_i.host.id %}selected{% endifequal %}>{{ x.name }} ({{ x.id }})</option>
     {% endfor %}
     </select>
     <br />
