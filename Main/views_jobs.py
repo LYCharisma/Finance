@@ -74,7 +74,7 @@ def detail(req,jid):
         dict={'job':job}
         try:
             out=open(os.path.join(RESULT_DIR,"out_"+str(job.id)))
-            dict.update(out=out.read())
+            dict.update(std_out=out.read())
             out.close()
         except:
             dict.update(std_out="")
@@ -83,7 +83,7 @@ def detail(req,jid):
             dict.update(std_err=err.read())
             err.close()
         except:
-            dict.update(err="")
+            dict.update(std_err="")
         return ren2res("jobs/detail.html",req,dict)
 
 def stop(req,jid):
