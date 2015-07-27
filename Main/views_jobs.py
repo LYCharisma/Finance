@@ -15,7 +15,7 @@ from Main import client
 def choose(req):
     if req.method=='GET':
         if App.objects.exists():
-            return ren2res("jobs/choose.html",req,{'apps':App.objects.all()})
+            return ren2res("jobs/choose.html",req,{'apps':App.objects.filter(hide=False)})
         else:
             return ren2res("jobs/choose.html",req,{'info':"抱歉，还没有可用的应用！"})
 
